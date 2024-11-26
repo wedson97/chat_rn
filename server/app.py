@@ -3,11 +3,10 @@ from flask_socketio import SocketIO, emit
 import uuid
 
 app = Flask(__name__)
-socketio = SocketIO(app, cors_allowed_origins="*")  # Permite todas as origens. Substitua "*" por uma URL específica para maior segurança.
+socketio = SocketIO(app, cors_allowed_origins="*")
 
 @socketio.on('sendMessage')
 def handle_message(message):
-    # Adiciona um UUID como identificador único
     message['_id'] = str(uuid.uuid4())
     print(f"Mensagem recebida: {message}")
     emit('receiveMessage', message, broadcast=True)
